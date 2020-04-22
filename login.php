@@ -50,7 +50,7 @@ else {
        
   $dbh = mysql_connect($host, $user, $pswd) or die("Не могу соединиться с MySQL.");
   mysql_select_db($database) or die("Не могу подключиться к базе.");
-  $row = mysql_fetch_array(mysql_query("SELECT * FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'");
+  $row = mysql_fetch_array(mysql_query("SELECT * FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'"));
   mysql_close();
   if ($row) {
     // Если все ок, то авторизуем пользователя.
