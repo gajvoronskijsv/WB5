@@ -1,0 +1,17 @@
+body {
+  padding: 0;
+  outline: none;
+  font-family: sans-serif;
+  background-color: lightsteelblue;
+}
+
+.form{
+  width: 800px;
+  margin: 0 auto;
+}
+
+.error {
+  border: 2px solid red;
+}
+
+}
