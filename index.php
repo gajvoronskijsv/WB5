@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
        
     $dbh = mysql_connect($host, $user, $pswd) or die("Не могу соединиться с MySQL.");
     mysql_select_db($database) or die("Не могу подключиться к базе.");
-    $row = mysql_fetch_array(mysql_query("SELECT * FROM `DBlab5` where login='".$_SESSION['login']."'");
+    $row = mysql_fetch_array(mysql_query("SELECT * FROM `DBlab5` where login='".$_SESSION['login']."'"));
     $values['username'] =strip_tags($row['name']);
     $values['email'] = strip_tags($row['mail']);
     $values['birthdate'] = strip_tags($row['date']);
