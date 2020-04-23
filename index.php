@@ -124,7 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     	$values['superpower2'] = strip_tags($row['super2']);
     	$values['superpower3'] = strip_tags($row['super3']);
    		$values['biography'] = strip_tags($row['bio']);
-    	$values['checkbox'] = strip_tags($row['checkbox']);
     }
 	catch(PDOException $e){
     }
@@ -255,8 +254,7 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
             super1 = '".$_POST['superpower1']."',
             super2 = '".$_POST['superpower2']."',
             super3 = '".$_POST['superpower3']."',
-            bio = '".$_POST['biography']."',
-            checkbox = '".$_POST['checkbox']."'
+            bio = '".$_POST['biography']."'
         WHERE login='".$_SESSION['login']."';
       	");
     }
@@ -284,10 +282,9 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
   $super2 = $_POST['superpower2'];
   $super3 = $_POST['superpower3'];
   $bio = $_POST['biography'];
-  $checkbox = $_POST['checkbox'];
 
   try {
-    $stmt = $db->prepare("INSERT INTO DBlab5 (login, pass, name, mail, date, gender, limb, super1, super2, super3, bio, checkbox) VALUES (:login, :pass, :name, :mail,  :date, :gender, :limb, :super1, :super2, :super3, :bio, :checkbox)");
+    $stmt = $db->prepare("INSERT INTO DBlab5 (login, pass, name, mail, date, gender, limb, super1, super2, super3, bio) VALUES (:login, :pass, :name, :mail,  :date, :gender, :limb, :super1, :super2, :super3, :bio)");
     $stmt->bindParam(':login', $login);
     $stmt->bindParam(':pass', $pass);
     $stmt->bindParam(':name', $name);
@@ -299,7 +296,6 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
     $stmt->bindParam(':super2', $super2);
     $stmt->bindParam(':super3', $super3);
     $stmt->bindParam(':bio', $bio);
-    $stmt->bindParam(':checkbox', $checkbox);
     $stmt->execute();
   }
     catch(PDOException $e){
