@@ -28,22 +28,24 @@ if (!empty($_SESSION['login'])) {
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') 
-if (!empty($login_messages)) {
-  print('<div id="messages">');
-  // Выводим все сообщения.
-  foreach ($login_messages as $message) {
-    print($message);
-  }
-  print('</div>');
-}
-?>
-<form action="" method="post">
-  <input name="login" />
-  <input name="pass" />
-  <input type="submit" value="Войти" />
-</form>
+{
+	if (!empty($login_messages)) {
+	  print('<div id="messages">');
+	  // Выводим все сообщения.
+	  foreach ($login_messages as $message) {
+	    print($message);
+	  }
+	  print('</div>');
+	}
+	?>
+	
+	<form action="" method="post">
+	  <input name="login" />
+	  <input name="pass" />
+	  <input type="submit" value="Войти" />
+	</form>
 
-<?php
+	<?php
 }
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
