@@ -66,7 +66,7 @@ $login_messages[] = 'post works';
     $_SESSION['login'] = $_POST['login'];
     // Записываем ID пользователя.
     $_SESSION['uid'] = $_POST['login'];
-    // Делаем перенаправление.
+    // Делаем перенаправление..
     header('Location: login.php');
   }
   else 
