@@ -35,19 +35,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
   $loginErrors['connect'] = !empty($_COOKIE['loginConnect_error']);
   $loginErrors['row'] = !empty($_COOKIE['loginRow_error']);
 
-  if ($LoginErrors['post']) {
+  if ($loginErrors['post']) {
     // Удаляем куку, указывая время устаревания в прошлом.
     setcookie('loginPost_error', '', 100000);
     // Выводим сообщение.
     $loginMessages['post'] = '<div class="error">post works</div>';
   }
-  if ($LoginErrors['connect']) {
+  if ($loginErrors['connect']) {
     // Удаляем куку, указывая время устаревания в прошлом.
     setcookie('loginConnect_error', '', 100000);
     // Выводим сообщение.
     $loginMessages['connect'] = '<div class="error">Connected to db</div>';
   }
-  if ($LoginErrors['row']) {
+  if ($loginErrors['row']) {
     // Удаляем куку, указывая время устаревания в прошлом.
     setcookie('loginRow_error', '', 100000);
     // Выводим сообщение.
