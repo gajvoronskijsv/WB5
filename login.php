@@ -22,7 +22,8 @@ if (!empty($_SESSION['login'])) {
   // TODO: Сделать выход (окончание сессии вызовом session_destroy()
   //при нажатии на кнопку Выход).
   // Делаем перенаправление на форму.
-  header('Location: ./');
+  session_destroy();
+  header('login.php');
 }
 $login_messages = array();
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
