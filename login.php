@@ -60,7 +60,7 @@ $login_messages[] = 'post works';
 	}
 	catch(PDOException $e){
   	}
-  if ($row) {
+  if (empty($row)) {
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
     // Записываем ID пользователя.
