@@ -56,7 +56,7 @@ else {
     // Записываем ID пользователя.
     $_SESSION['uid'] = 123;
     // Делаем перенаправление.
-    header('Location: ./');
+    header('Location: index.php');
   }
   else header('Location: login.php'); 
 }
