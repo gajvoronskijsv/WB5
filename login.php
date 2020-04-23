@@ -24,7 +24,7 @@ if (!empty($_SESSION['login'])) {
   // Делаем перенаправление на форму.
   header('Location: ./');
 }
-
+$login_messages = array();
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') 
@@ -49,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 }
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
-$login_messages = array();
 $login_messages[] = 'post works';
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
@@ -68,7 +67,7 @@ $login_messages[] = 'post works';
     // Записываем ID пользователя.
     $_SESSION['uid'] = $_POST['login'];
     // Делаем перенаправление.
-    header('Location: index.php');
+    header('Location: login.php');
   }
   else 
   {
