@@ -46,7 +46,7 @@ else {
        
   $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
     try {
-    	$db->query("SELECT * FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'"));
+    	$db->query("SELECT * FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'");
 	}
 	catch(PDOException $e){
   	}
