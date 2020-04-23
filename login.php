@@ -22,6 +22,7 @@ if (!empty($_SESSION['login'])) {
   // TODO: Сделать выход (окончание сессии вызовом session_destroy()
   //при нажатии на кнопку Выход).
   // Делаем перенаправление на форму.
+  session_destroy();
   header('Location: ./');
 }
 $login_messages = array();
