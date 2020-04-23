@@ -61,13 +61,12 @@ $login_messages[] = 'post works';
 	catch(PDOException $e){
   	}
   if ($row) {
-  	$login_messages[] = 'rownotempty';
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
     // Записываем ID пользователя.
     $_SESSION['uid'] = $_POST['login'];
     // Делаем перенаправление..
-    header('Location: login.php');
+    header('Location: index.php');
   }
   else 
   {
