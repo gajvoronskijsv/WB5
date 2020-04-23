@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (empty($errors) && !empty($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
     // TODO: загрузить данные пользователя из БД  
-    $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
+    $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
     try {
     	$row=$db->query("SELECT * FROM `DBlab5` where login='".$_SESSION['login']."'");
     	$values['username'] =strip_tags($row['name']);
@@ -242,7 +242,7 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
       session_start() && !empty($_SESSION['login'])) {
     // TODO: перезаписать данные в БД новыми данными,
     // кроме логина и пароля.
-    $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
+    $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
     try {
     	$db->query("
         UPDATE DBlab5
@@ -272,7 +272,6 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
     setcookie('pass', $pass);
 
     // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
-  $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
   $name = $_POST['username'];
   $mail = $_POST['email'];
   $date = $_POST['birthdate'];
@@ -282,7 +281,8 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
   $super2 = $_POST['superpower2'];
   $super3 = $_POST['superpower3'];
   $bio = $_POST['biography'];
-
+ 
+  $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
   try {
     $stmt = $db->prepare("INSERT INTO DBlab5 (login, pass, name, mail, date, gender, limb, super1, super2, super3, bio) VALUES (:login, :pass, :name, :mail,  :date, :gender, :limb, :super1, :super2, :super3, :bio)");
     $stmt->bindParam(':login', $login);

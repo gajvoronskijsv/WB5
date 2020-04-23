@@ -53,7 +53,7 @@ $login_messages[] = 'post works';
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
        
-  $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
+  $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
     try {
     	$login_messages[] = 'connected';
     	$db->query("SELECT * FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'");
