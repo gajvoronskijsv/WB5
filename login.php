@@ -22,7 +22,6 @@ if (!empty($_SESSION['login'])) {
   // TODO: Сделать выход (окончание сессии вызовом session_destroy()
   //при нажатии на кнопку Выход).
   // Делаем перенаправление на форму.
-  session_destroy();
   header('Location: ./');
 }
 $login_messages = array();
@@ -61,7 +60,7 @@ $login_messages[] = 'post works';
 	}
 	catch(PDOException $e){
   	}
-  if (empty($row)) {
+  if (!empty($row)) {
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
     // Записываем ID пользователя.
