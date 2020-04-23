@@ -55,10 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
   }
 
 
-	if (!empty($login_messages)) {
+	if (!empty($loginMessages)) {
 	  print('<div id="messages">');
 	  // Выводим все сообщения.
-	  foreach ($login_messages as $message) {
+	  foreach ($loginMessages as $message) {
 	    print($message);
 	  }
 	  print('</div>');
