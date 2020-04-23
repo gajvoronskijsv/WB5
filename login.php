@@ -43,15 +43,13 @@ else {
 
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
-  $host='localhost'; // имя хоста 
-  $database='u20296'; // имя базы данных
-  $user='u20296'; // имя пользователя
-  $pswd='1377191'; // пароль
        
-  $dbh = mysql_connect($host, $user, $pswd) or die("Не могу соединиться с MySQL.");
-  mysql_select_db($database) or die("Не могу подключиться к базе.");
-  $row = mysql_fetch_array(mysql_query("SELECT * FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'"));
-  mysql_close();
+  $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
+    try {
+    	$db->query("SELECT * FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'"));
+	}
+	catch(PDOException $e){
+  	}
   if ($row) {
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];

@@ -112,26 +112,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if (empty($errors) && !empty($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
-    // TODO: загрузить данные пользователя из БД
-    $host='localhost'; // имя хоста 
-    $database='u20296'; // имя базы данных
-    $user='u20296'; // имя пользователя
-    $pswd='1377191'; // пароль
-       
-    $dbh = mysql_connect($host, $user, $pswd) or die("Не могу соединиться с MySQL.");
-    mysql_select_db($database) or die("Не могу подключиться к базе.");
-    $row = mysql_fetch_array(mysql_query("SELECT * FROM `DBlab5` where login='".$_SESSION['login']."'"));
-    $values['username'] =strip_tags($row['name']);
-    $values['email'] = strip_tags($row['mail']);
-    $values['birthdate'] = strip_tags($row['date']);
-    $values['sex'] = strip_tags($row['gender']);
-    $values['limbs'] = strip_tags($row['limb']);
-    $values['superpower1'] =strip_tags($row['super1']);
-    $values['superpower2'] = strip_tags($row['super2']);
-    $values['superpower3'] = strip_tags($row['super3']);
-    $values['biography'] = strip_tags($row['bio']);
-    $values['checkbox'] = strip_tags($row['checkbox']);
-    mysql_close();
+    // TODO: загрузить данные пользователя из БД  
+    $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
+    try {
+    	$row=$db->query("SELECT * FROM `DBlab5` where login='".$_SESSION['login']."'");
+    	$values['username'] =strip_tags($row['name']);
+    	$values['email'] = strip_tags($row['mail']);
+    	$values['birthdate'] = strip_tags($row['date']);
+    	$values['sex'] = strip_tags($row['gender']);
+    	$values['limbs'] = strip_tags($row['limb']);
+    	$values['superpower1'] =strip_tags($row['super1']);
+    	$values['superpower2'] = strip_tags($row['super2']);
+    	$values['superpower3'] = strip_tags($row['super3']);
+   		$values['biography'] = strip_tags($row['bio']);
+    	$values['checkbox'] = strip_tags($row['checkbox']);
+    }
+	catch(PDOException $e){
+    }
     // и заполнить переменную $values,
     // предварительно санитизовав.
     printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
@@ -247,9 +244,9 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
       session_start() && !empty($_SESSION['login'])) {
     // TODO: перезаписать данные в БД новыми данными,
     // кроме логина и пароля.
-    $dbh = mysql_connect($host, $user, $pswd) or die("Не могу соединиться с MySQL.");
-    mysql_select_db($database) or die("Не могу подключиться к базе.");
-    mysql_query("
+    $db = new PDO('mysql:host=localhost;dbname=u20296', u20296, 1377191);
+    try {
+    	$db->query("
         UPDATE DBlab5
         SET name = '".$_POST['username']."',
             mail = '".$_POST['email']."',
@@ -262,8 +259,10 @@ if (!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", $_POST['email']
             bio = '".$_POST['biography']."',
             checkbox = '".$_POST['checkbox']."'
         WHERE login='".$_SESSION['login']."';
-      ");
-    mysql_close();
+      	");
+    }
+    catch(PDOException $e){
+  }
 
   }
   else {
