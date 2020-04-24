@@ -45,7 +45,7 @@ if (!empty($messages)) {
           <label><input type="checkbox" name ="superpower3" value="sp3"<?php if ($values['superpower3'] != '') {print 'checked="checked"';} ?> >Всемогущество</label><br />
 
         <label><b <?php if ($errors['biography']) {print 'class="error"';} ?> >Биография</b><br />
-          <textarea name="biography" value="<?php print $values['biography']; ?>" ></textarea>
+          <textarea type="text" name="biography"><?php print $values['biography']; ?></textarea>
         </label><br />
         
         <label><input <?php if ($values['checkbox'] != '') {print 'checked="checked"';} ?>  name="checkbox" type="checkbox">
