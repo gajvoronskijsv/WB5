@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
-  if (empty($errors) && session_start() && !empty($_SESSION['login'])) 
+  if (!empty($_SESSION['login'])) 
   {
     // TODO: загрузить данные пользователя из БД  
     $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
