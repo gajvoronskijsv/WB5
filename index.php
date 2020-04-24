@@ -8,7 +8,8 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-
+//session_start();
+//session_destroy();
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') 
@@ -127,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
     $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
     try 
     {
-    	$row=$db->query("SELECT * FROM DBlab5 where login=".$_SESSION['login']);
+    	$row=$db->query("SELECT * FROM DBlab5 where login=".$_SESSION['login'])->fetch();
     	$values['username'] =strip_tags($row['name']);
     	$values['email'] = strip_tags($row['mail']);
     	$values['birthdate'] = strip_tags($row['date']);
@@ -311,7 +312,7 @@ else
           $new_login = rand(1, 100);
           $new_pass = rand(1, 100);
           $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
-          $row=$db->query("SELECT login FROM DBlab5 where login=".$new_login);
+          $row=$db->query("SELECT login FROM DBlab5 where login=".$new_login)->fetch();
           $db = null;
           if(!empty($row))
           {
@@ -363,16 +364,17 @@ else
 		  setcookie('save', '1');
 		  // Делаем перенаправление.
 		  header('Location: index.php');
+		  exit();
 		}
 	}
 	if ($_POST['sendform']=='exit'){
 		session_destroy();
-		setcookie(session_name(), '', time() + 24 * 60 * 60);
     header('Location: index.php');
+    exit();
 	}
 	if ($_POST['sendform']=='enter'){
 		session_destroy();
-		setcookie(session_name(), '', time() + 24 * 60 * 60);
     header('Location: login.php');
+    exit();
 	}
 }
