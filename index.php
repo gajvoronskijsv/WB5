@@ -140,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
    		$values['biography'] = strip_tags($row['bio']);
     }
 		catch(PDOException $e){}
+		$db = null;
     // и заполнить переменную $values,
     // предварительно санитизовав.
     printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
@@ -293,6 +294,7 @@ else
 	      	");
 	    }
 	    catch(PDOException $e){}
+	    $db = null;
 		}
 		//пишем нового юзера
 	  else 
@@ -302,17 +304,18 @@ else
 	    $b=TRUE;
       try 
       {
+      	$db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
         while($b)
         {
           $login = rand(1, 100);
           $pass = rand(1, 100);
           $row=$db->query("SELECT login FROM DBlab5 where login=".$login);
-      		$db = null;
           if(empty($row))
           {
             $b=FALSE;
           }
         }
+        $db = null;
       }
       catch(PDOException $e)
       {
@@ -354,12 +357,11 @@ else
 		    $db = null;
 		  }
 		  catch(PDOException $e){}
+		  $db = null;
 		  // Сохраняем куку с признаком успешного сохранения.
 		  setcookie('save', '1');
-
 		  // Делаем перенаправление.
 		  header('Location: index.php');
-		  exit();
 		}
 	}
 	if ($_POST['sendform']=='exit'){

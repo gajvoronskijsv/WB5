@@ -82,10 +82,9 @@ else {
     try {
     //setcookie('loginConnect_error', '1', time() + 24 * 60 * 60);
     	$row=$db->query("SELECT login FROM DBlab5 where login=".$_POST['login']." AND pass=".$_POST['pass']);
-      $db = null;
 	}
-	catch(PDOException $e){
-  	}
+	catch(PDOException $e){}
+  $db = null;
   if (!empty($row)) {
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
