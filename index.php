@@ -8,8 +8,8 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-session_start();
-session_destroy();
+//session_start();
+//session_destroy();
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') 
@@ -364,17 +364,14 @@ else
 		  setcookie('save', '1');
 		  // Делаем перенаправление.
 		  header('Location: index.php');
-		  exit();
 		}
 	}
 	if ($_POST['sendform']=='exit'){
 		session_destroy();
     header('Location: index.php');
-    exit();
 	}
 	if ($_POST['sendform']=='enter'){
 		session_destroy();
     header('Location: login.php');
-    exit();
 	}
 }
