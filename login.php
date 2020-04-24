@@ -22,7 +22,6 @@ if (!empty($_SESSION['login'])) {
   // TODO: Сделать выход (окончание сессии вызовом session_destroy()
   //при нажатии на кнопку Выход).
   // Делаем перенаправление на форму.
-  session_destroy();
   header('login.php');
 }
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
@@ -31,11 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
   $loginMessages = array();
   $loginErrors = array();
-  $loginErrors['post'] = !empty($_COOKIE['loginPost_error']);
-  $loginErrors['connect'] = !empty($_COOKIE['loginConnect_error']);
+  //$loginErrors['post'] = !empty($_COOKIE['loginPost_error']);
+  //$loginErrors['connect'] = !empty($_COOKIE['loginConnect_error']);
   $loginErrors['row'] = !empty($_COOKIE['loginRow_error']);
 
-  if ($loginErrors['post']) {
+  /*if ($loginErrors['post']) {
     // Удаляем куку, указывая время устаревания в прошлом.
     setcookie('loginPost_error', '', 100000);
     // Выводим сообщение.
@@ -46,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
     setcookie('loginConnect_error', '', 100000);
     // Выводим сообщение.
     $loginMessages['connect'] = '<div class="error">Connected to db</div>';
-  }
+  }*/
   if ($loginErrors['row']) {
     // Удаляем куку, указывая время устаревания в прошлом.
     setcookie('loginRow_error', '', 100000);
     // Выводим сообщение.
-    $loginMessages['row'] = '<div class="error">rowisempty</div>';
+    $loginMessages['row'] = '<div class="error">Нет совпадений в базе данных</div>';
   }
 
 
@@ -75,19 +74,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 }
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
-setcookie('loginPost_error', '1', time() + 24 * 60 * 60);
+//setcookie('loginPost_error', '1', time() + 24 * 60 * 60);
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
        
   $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
     try {
-    	setcookie('loginConnect_error', '1', time() + 24 * 60 * 60);
-    	$db->query("SELECT login FROM `DBlab5` where login='".$_POST['login']."' AND pass='".$_POST['pass']."'");
+    //setcookie('loginConnect_error', '1', time() + 24 * 60 * 60);
+    	$row=$db->query("SELECT login FROM DBlab5 where login=".$_POST['login']." AND pass=".$_POST['pass']);
+      $db = null;
 	}
 	catch(PDOException $e){
   	}
   if (!empty($row)) {
-    session_start();
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
     // Записываем ID пользователя.

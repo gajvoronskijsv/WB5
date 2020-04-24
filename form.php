@@ -51,8 +51,9 @@ if (!empty($messages)) {
         <label><input <?php if ($values['checkbox'] != '') {print 'checked="checked"';} ?>  name="checkbox" type="checkbox">
           <b <?php if ($errors['checkbox']) {print 'class="error"';} ?> >С контрактом ознакомлен(а)</b></label><br />
         
-        <input class="submit" name="sendform" type="submit" value="Отправить"><br />
-
+        <input class="submit" type="submit" name="sendform" value="Отправить"><br />
+		<input class="submit" type="submit" name="sendform" id="out" value="exit"/>
+		<input class="submit" type="submit" name="sendform" id="out" value="enter"/>
       </form>
       </div>
     </div>
