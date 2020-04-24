@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 		$db = null;
     // и заполнить переменную $values,
     // предварительно санитизовав.
-    $messages[] ="<div class="error"> Вход с логином".$_SESSION['login']."</div>";
+    $messages[] ='<div class="error"> Вход с логином'.$_SESSION['login'].'</div>';
   }
 
 
