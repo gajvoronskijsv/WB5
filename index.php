@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
     $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
     try 
     {
-    	$row=$db->query("SELECT * FROM DBlab5 where login=".$_SESSION['login'])->fetch();
+    	$row=$db->query("SELECT * FROM DBlab5 where login='".$_SESSION['login']."'")->fetch();
     	$values['username'] =strip_tags($row['name']);
     	$values['email'] = strip_tags($row['mail']);
     	$values['birthdate'] = strip_tags($row['date']);
@@ -289,7 +289,7 @@ else
 	            super2 = '".$_POST['superpower2']."',
 	            super3 = '".$_POST['superpower3']."',
 	            bio = '".$_POST['biography']."'
-	        WHERE login=".$_SESSION['login'].";
+	        WHERE login='".$_SESSION['login']."';
 	      	");
 	    }
 	    catch(PDOException $e){}
@@ -309,10 +309,9 @@ else
         while($b)
         {
         	$b=FALSE;
-          $new_login = rand(1, 100);
-          $new_pass = rand(1, 100);
+          $new_login =  (string)rand(1, 100);
           $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
-          $row=$db->query("SELECT login FROM DBlab5 where login=".$new_login)->fetch();
+          $row=$db->query("SELECT login FROM DBlab5 where login='".$new_login."'")->fetch();
           $db = null;
           if(!empty($row))
           {
@@ -327,8 +326,10 @@ else
         exit();
       }
 	    // Сохраняем в Cookies.
+	    $new_pass = (string)rand(1, 100);
 	    setcookie('login', $new_login);
 	    setcookie('pass', $new_pass);
+	    $new_pass = (string)md5($new_pass);
 
 	    // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
 		  $name = $_POST['username'];

@@ -82,16 +82,16 @@ else {
     try {
     //setcookie('loginConnect_error', '1', time() + 24 * 60 * 60);
     $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
-    $row=$db->query("SELECT login FROM DBlab5 where login=".$_POST['login']." AND pass=".$_POST['pass'])->fetch();
+    $row=$db->query("SELECT login FROM DBlab5 where login='".(string)$_POST['login']."' AND pass='".(string)md5($_POST['pass'])."'")->fetch();
     $db = null;
 	}
 	catch(PDOException $e){}
   if (!empty($row)) {
     // Если все ок, то авторизуем пользователя.
-    $_SESSION['login'] = $_POST['login'];
-    $_SESSION['pass'] = $_POST['pass'];
+    $_SESSION['login'] = (string)$_POST['login'];
+    $_SESSION['pass'] = (string)md5($_POST['pass']);
     // Записываем ID пользователя.
-    $_SESSION['uid'] = $_POST['login'];
+    $_SESSION['uid'] = $_SESSION['login'];
     // Делаем перенаправление..
     header('Location: index.php');
   }
