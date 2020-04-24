@@ -128,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
     try 
     {
     	$row=$db->query("SELECT * FROM DBlab5 where login=".$_SESSION['login']);
-    	$db = null;
     	$values['username'] =strip_tags($row['name']);
     	$values['email'] = strip_tags($row['mail']);
     	$values['birthdate'] = strip_tags($row['date']);
@@ -143,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 		$db = null;
     // и заполнить переменную $values,
     // предварительно санитизовав.
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+    $messages[] ="<div class="error"> Вход с логином".$_SESSION['login']."</div>";
   }
 
 
@@ -295,6 +294,8 @@ else
 	    }
 	    catch(PDOException $e){}
 	    $db = null;
+	  // Делаем перенаправление.
+		header('Location: index.php');
 		}
 		//пишем нового юзера
 	  else 
@@ -304,18 +305,19 @@ else
 	    $b=TRUE;
       try 
       {
-      	$db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
         while($b)
         {
-          $login = rand(1, 100);
-          $pass = rand(1, 100);
-          $row=$db->query("SELECT login FROM DBlab5 where login=".$login);
-          if(empty($row))
+        	$b=FALSE;
+          $new_login = rand(1, 100);
+          $new_pass = rand(1, 100);
+          $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
+          $row=$db->query("SELECT login FROM DBlab5 where login=".$new_login);
+          $db = null;
+          if(!empty($row))
           {
-            $b=FALSE;
+            $b=TRUE;
           }
         }
-        $db = null;
       }
       catch(PDOException $e)
       {
@@ -324,8 +326,8 @@ else
         exit();
       }
 	    // Сохраняем в Cookies.
-	    setcookie('login', $login);
-	    setcookie('pass', $pass);
+	    setcookie('login', $new_login);
+	    setcookie('pass', $new_pass);
 
 	    // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
 		  $name = $_POST['username'];
@@ -342,8 +344,8 @@ else
 		  try 
 		  {
 		    $stmt = $db->prepare("INSERT INTO DBlab5 (login, pass, name, mail, date, gender, limb, super1, super2, super3, bio) VALUES (:login, :pass, :name, :mail,  :date, :gender, :limb, :super1, :super2, :super3, :bio)");
-		    $stmt->bindParam(':login', $login);
-		    $stmt->bindParam(':pass', $pass);
+		    $stmt->bindParam(':login', $new_login);
+		    $stmt->bindParam(':pass', $new_pass);
 		    $stmt->bindParam(':name', $name);
 		    $stmt->bindParam(':mail', $mail);
 		    $stmt->bindParam(':date', $date);
@@ -354,7 +356,6 @@ else
 		    $stmt->bindParam(':super3', $super3);
 		    $stmt->bindParam(':bio', $bio);
 		    $stmt->execute();
-		    $db = null;
 		  }
 		  catch(PDOException $e){}
 		  $db = null;
@@ -366,10 +367,12 @@ else
 	}
 	if ($_POST['sendform']=='exit'){
 		session_destroy();
+		setcookie(session_name(), '', time() + 24 * 60 * 60);
     header('Location: index.php');
 	}
 	if ($_POST['sendform']=='enter'){
 		session_destroy();
+		setcookie(session_name(), '', time() + 24 * 60 * 60);
     header('Location: login.php');
 	}
 }

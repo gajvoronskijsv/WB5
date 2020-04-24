@@ -88,6 +88,8 @@ else {
   if (!empty($row)) {
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
+    $_SESSION['pass'] = $_POST['pass'];
+    setcookie(session_name(), '1', time() + 24 * 60 * 60);
     // Записываем ID пользователя.
     $_SESSION['uid'] = $_POST['login'];
     // Делаем перенаправление..
