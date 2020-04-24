@@ -14,7 +14,7 @@ header('Content-Type: text/html; charset=UTF-8');
 
 // Начинаем сессию.
 session_start();
-//session_destroy();
+session_destroy();
 
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
@@ -79,13 +79,13 @@ else {
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
        
-  $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
     try {
     //setcookie('loginConnect_error', '1', time() + 24 * 60 * 60);
-    	$row=$db->query("SELECT login FROM DBlab5 where login=".$_POST['login']." AND pass=".$_POST['pass'])->fetch();
+    $db = new PDO('mysql:host=localhost;dbname=u20296', 'u20296', '1377191');
+    $row=$db->query("SELECT login FROM DBlab5 where login=".$_POST['login']." AND pass=".$_POST['pass'])->fetch();
+    $db = null;
 	}
 	catch(PDOException $e){}
-  $db = null;
   if (!empty($row)) {
     // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
